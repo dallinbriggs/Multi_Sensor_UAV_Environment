@@ -242,7 +242,9 @@ void Model::Draw(QMatrix4x4 modelViewMatrix, QMatrix4x4 projectionMatrix, QGLSha
 
     // Center and scale the model
     modelViewMatrix.scale(m_scaleFactor);
+    modelViewMatrix.rotate(180, 0, 1, 0.0f);
     modelViewMatrix.translate(-m_sceneCenter.x, -m_sceneCenter.y, -m_sceneCenter.z);
+
 
     foreach(ModelNode node, m_nodes)
     {

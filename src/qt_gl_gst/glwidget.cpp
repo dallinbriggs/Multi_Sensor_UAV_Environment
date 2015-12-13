@@ -338,7 +338,7 @@ void GLWidget::paintEvent(QPaintEvent *event)
             }
             else
             {
-                vidQuadMatrix.rotate((360/this->m_vidTextures.size())*vidIx, 0.0, 1.0, 0.0);
+                vidQuadMatrix.rotate((270/this->m_vidTextures.size())*vidIx, 0.0, 1.0, 0.0);
                 vidQuadMatrix.translate(0.0, 0.0, 2.0);
             }
 
