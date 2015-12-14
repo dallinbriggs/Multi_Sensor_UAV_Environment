@@ -54,12 +54,14 @@ SOURCES       = ../qt_gl_gst/main.cpp \
 		../qt_gl_gst/mainwindow.cpp \
 		../qt_gl_gst/yuvdebugwindow.cpp \
 		../qt_gl_gst/controlsform.cpp \
-		../qt_gl_gst/applogger.cpp moc_glwidget.cpp \
+		../qt_gl_gst/applogger.cpp \
+		../qt_gl_gst/senslocwindow.cpp moc_glwidget.cpp \
 		moc_gstpipeline.cpp \
 		moc_pipeline.cpp \
 		moc_mainwindow.cpp \
 		moc_yuvdebugwindow.cpp \
-		moc_controlsform.cpp
+		moc_controlsform.cpp \
+		moc_senslocwindow.cpp
 OBJECTS       = main.o \
 		glwidget.o \
 		model.o \
@@ -70,12 +72,14 @@ OBJECTS       = main.o \
 		yuvdebugwindow.o \
 		controlsform.o \
 		applogger.o \
+		senslocwindow.o \
 		moc_glwidget.o \
 		moc_gstpipeline.o \
 		moc_pipeline.o \
 		moc_mainwindow.o \
 		moc_yuvdebugwindow.o \
-		moc_controlsform.o
+		moc_controlsform.o \
+		moc_senslocwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -168,7 +172,7 @@ first: all
 
 all: Makefile $(TARGET)
 
-$(TARGET): ui_controlsform.h $(OBJECTS)  
+$(TARGET): ui_controlsform.h ui_senslocwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 	{ test -n "$(DESTDIR)" && DESTDIR="$(DESTDIR)" || DESTDIR=.; } && test $$(gdb --version | sed -e 's,[^0-9][^0-9]*\([0-9]\)\.\([0-9]\).*,\1\2,;q') -gt 72 && gdb --nx --batch --quiet -ex 'set confirm off' -ex "save gdb-index $$DESTDIR" -ex quit '$(TARGET)' && test -f $(TARGET).gdb-index && objcopy --add-section '.gdb_index=$(TARGET).gdb-index' --set-section-flags '.gdb_index=readonly' '$(TARGET)' '$(TARGET)' && rm -f $(TARGET).gdb-index || true
 
@@ -312,7 +316,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/qt_gl_gst1.0.0 || mkdir -p .tmp/qt_gl_gst1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/qt_gl_gst1.0.0/ && $(COPY_FILE) --parents ../qt_gl_gst/glwidget.h ../qt_gl_gst/asyncwaitingqueue.h ../qt_gl_gst/model.h ../qt_gl_gst/gstpipeline.h ../qt_gl_gst/pipeline.h ../qt_gl_gst/shaderlists.h ../qt_gl_gst/mainwindow.h ../qt_gl_gst/yuvdebugwindow.h ../qt_gl_gst/controlsform.h ../qt_gl_gst/applogger.h .tmp/qt_gl_gst1.0.0/ && $(COPY_FILE) --parents ../qt_gl_gst/main.cpp ../qt_gl_gst/glwidget.cpp ../qt_gl_gst/model.cpp ../qt_gl_gst/gstpipeline.cpp ../qt_gl_gst/pipeline.cpp ../qt_gl_gst/shaderlists.cpp ../qt_gl_gst/mainwindow.cpp ../qt_gl_gst/yuvdebugwindow.cpp ../qt_gl_gst/controlsform.cpp ../qt_gl_gst/applogger.cpp .tmp/qt_gl_gst1.0.0/ && $(COPY_FILE) --parents ../qt_gl_gst/controlsform.ui .tmp/qt_gl_gst1.0.0/ && (cd `dirname .tmp/qt_gl_gst1.0.0` && $(TAR) qt_gl_gst1.0.0.tar qt_gl_gst1.0.0 && $(COMPRESS) qt_gl_gst1.0.0.tar) && $(MOVE) `dirname .tmp/qt_gl_gst1.0.0`/qt_gl_gst1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/qt_gl_gst1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/qt_gl_gst1.0.0/ && $(COPY_FILE) --parents ../qt_gl_gst/glwidget.h ../qt_gl_gst/asyncwaitingqueue.h ../qt_gl_gst/model.h ../qt_gl_gst/gstpipeline.h ../qt_gl_gst/pipeline.h ../qt_gl_gst/shaderlists.h ../qt_gl_gst/mainwindow.h ../qt_gl_gst/yuvdebugwindow.h ../qt_gl_gst/controlsform.h ../qt_gl_gst/applogger.h ../qt_gl_gst/senslocwindow.h .tmp/qt_gl_gst1.0.0/ && $(COPY_FILE) --parents ../qt_gl_gst/main.cpp ../qt_gl_gst/glwidget.cpp ../qt_gl_gst/model.cpp ../qt_gl_gst/gstpipeline.cpp ../qt_gl_gst/pipeline.cpp ../qt_gl_gst/shaderlists.cpp ../qt_gl_gst/mainwindow.cpp ../qt_gl_gst/yuvdebugwindow.cpp ../qt_gl_gst/controlsform.cpp ../qt_gl_gst/applogger.cpp ../qt_gl_gst/senslocwindow.cpp .tmp/qt_gl_gst1.0.0/ && $(COPY_FILE) --parents ../qt_gl_gst/controlsform.ui ../qt_gl_gst/senslocwindow.ui .tmp/qt_gl_gst1.0.0/ && (cd `dirname .tmp/qt_gl_gst1.0.0` && $(TAR) qt_gl_gst1.0.0.tar qt_gl_gst1.0.0 && $(COMPRESS) qt_gl_gst1.0.0.tar) && $(MOVE) `dirname .tmp/qt_gl_gst1.0.0`/qt_gl_gst1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/qt_gl_gst1.0.0
 
 
 clean:compiler_clean 
@@ -335,9 +339,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_glwidget.cpp moc_gstpipeline.cpp moc_pipeline.cpp moc_mainwindow.cpp moc_yuvdebugwindow.cpp moc_controlsform.cpp
+compiler_moc_header_make_all: moc_glwidget.cpp moc_gstpipeline.cpp moc_pipeline.cpp moc_mainwindow.cpp moc_yuvdebugwindow.cpp moc_controlsform.cpp moc_senslocwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_glwidget.cpp moc_gstpipeline.cpp moc_pipeline.cpp moc_mainwindow.cpp moc_yuvdebugwindow.cpp moc_controlsform.cpp
+	-$(DEL_FILE) moc_glwidget.cpp moc_gstpipeline.cpp moc_pipeline.cpp moc_mainwindow.cpp moc_yuvdebugwindow.cpp moc_controlsform.cpp moc_senslocwindow.cpp
 moc_glwidget.cpp: /usr/include/qt5/QtWidgets/QApplication \
 		/usr/include/qt5/QtWidgets/qapplication.h \
 		/usr/include/qt5/QtCore/qcoreapplication.h \
@@ -1655,16 +1659,150 @@ moc_controlsform.cpp: /usr/include/qt5/QtWidgets/QWidget \
 		/usr/include/qt5/QtCore/qfiledevice.h \
 		/usr/include/qt5/QtGui/qvector2d.h \
 		/usr/include/qt5/QtGui/qtouchdevice.h \
+		../qt_gl_gst/senslocwindow.h \
+		/usr/include/qt5/QtWidgets/QDialog \
+		/usr/include/qt5/QtWidgets/qdialog.h \
+		/usr/include/qt5/QtWidgets/QSpinBox \
+		/usr/include/qt5/QtWidgets/qspinbox.h \
+		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
+		/usr/include/qt5/QtGui/qvalidator.h \
+		/usr/include/qt5/QtCore/qregularexpression.h \
+		/usr/include/qt5/QtWidgets/QSlider \
+		/usr/include/qt5/QtWidgets/qslider.h \
+		/usr/include/qt5/QtWidgets/qabstractslider.h \
 		../qt_gl_gst/controlsform.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qt_gl_gst/controlsform.h -o moc_controlsform.cpp
 
+moc_senslocwindow.cpp: /usr/include/qt5/QtWidgets/QDialog \
+		/usr/include/qt5/QtWidgets/qdialog.h \
+		/usr/include/qt5/QtWidgets/qwidget.h \
+		/usr/include/qt5/QtGui/qwindowdefs.h \
+		/usr/include/qt5/QtCore/qglobal.h \
+		/usr/include/qt5/QtCore/qconfig.h \
+		/usr/include/qt5/QtCore/qfeatures.h \
+		/usr/include/qt5/QtCore/qsystemdetection.h \
+		/usr/include/qt5/QtCore/qprocessordetection.h \
+		/usr/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/include/qt5/QtCore/qglobalstatic.h \
+		/usr/include/qt5/QtCore/qatomic.h \
+		/usr/include/qt5/QtCore/qbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/include/qt5/QtCore/qgenericatomic.h \
+		/usr/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/include/qt5/QtCore/qatomic_integrity.h \
+		/usr/include/qt5/QtCore/qoldbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_vxworks.h \
+		/usr/include/qt5/QtCore/qatomic_power.h \
+		/usr/include/qt5/QtCore/qatomic_alpha.h \
+		/usr/include/qt5/QtCore/qatomic_armv7.h \
+		/usr/include/qt5/QtCore/qatomic_armv6.h \
+		/usr/include/qt5/QtCore/qatomic_armv5.h \
+		/usr/include/qt5/QtCore/qatomic_bfin.h \
+		/usr/include/qt5/QtCore/qatomic_ia64.h \
+		/usr/include/qt5/QtCore/qatomic_mips.h \
+		/usr/include/qt5/QtCore/qatomic_s390.h \
+		/usr/include/qt5/QtCore/qatomic_sh4a.h \
+		/usr/include/qt5/QtCore/qatomic_sparc.h \
+		/usr/include/qt5/QtCore/qatomic_gcc.h \
+		/usr/include/qt5/QtCore/qatomic_x86.h \
+		/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/include/qt5/QtCore/qatomic_unix.h \
+		/usr/include/qt5/QtCore/qmutex.h \
+		/usr/include/qt5/QtCore/qlogging.h \
+		/usr/include/qt5/QtCore/qflags.h \
+		/usr/include/qt5/QtCore/qtypeinfo.h \
+		/usr/include/qt5/QtCore/qtypetraits.h \
+		/usr/include/qt5/QtCore/qsysinfo.h \
+		/usr/include/qt5/QtCore/qobjectdefs.h \
+		/usr/include/qt5/QtCore/qnamespace.h \
+		/usr/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/include/qt5/QtGui/qwindowdefs_win.h \
+		/usr/include/qt5/QtCore/qobject.h \
+		/usr/include/qt5/QtCore/qstring.h \
+		/usr/include/qt5/QtCore/qchar.h \
+		/usr/include/qt5/QtCore/qbytearray.h \
+		/usr/include/qt5/QtCore/qrefcount.h \
+		/usr/include/qt5/QtCore/qarraydata.h \
+		/usr/include/qt5/QtCore/qstringbuilder.h \
+		/usr/include/qt5/QtCore/qlist.h \
+		/usr/include/qt5/QtCore/qalgorithms.h \
+		/usr/include/qt5/QtCore/qiterator.h \
+		/usr/include/qt5/QtCore/qcoreevent.h \
+		/usr/include/qt5/QtCore/qscopedpointer.h \
+		/usr/include/qt5/QtCore/qmetatype.h \
+		/usr/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/include/qt5/QtCore/qisenum.h \
+		/usr/include/qt5/QtCore/qobject_impl.h \
+		/usr/include/qt5/QtCore/qmargins.h \
+		/usr/include/qt5/QtCore/qrect.h \
+		/usr/include/qt5/QtCore/qsize.h \
+		/usr/include/qt5/QtCore/qpoint.h \
+		/usr/include/qt5/QtGui/qpaintdevice.h \
+		/usr/include/qt5/QtGui/qpalette.h \
+		/usr/include/qt5/QtGui/qcolor.h \
+		/usr/include/qt5/QtGui/qrgb.h \
+		/usr/include/qt5/QtCore/qstringlist.h \
+		/usr/include/qt5/QtCore/qdatastream.h \
+		/usr/include/qt5/QtCore/qiodevice.h \
+		/usr/include/qt5/QtCore/qpair.h \
+		/usr/include/qt5/QtCore/qregexp.h \
+		/usr/include/qt5/QtCore/qstringmatcher.h \
+		/usr/include/qt5/QtGui/qbrush.h \
+		/usr/include/qt5/QtCore/qvector.h \
+		/usr/include/qt5/QtGui/qmatrix.h \
+		/usr/include/qt5/QtGui/qpolygon.h \
+		/usr/include/qt5/QtGui/qregion.h \
+		/usr/include/qt5/QtCore/qline.h \
+		/usr/include/qt5/QtGui/qtransform.h \
+		/usr/include/qt5/QtGui/qpainterpath.h \
+		/usr/include/qt5/QtGui/qimage.h \
+		/usr/include/qt5/QtGui/qpixmap.h \
+		/usr/include/qt5/QtCore/qsharedpointer.h \
+		/usr/include/qt5/QtCore/qshareddata.h \
+		/usr/include/qt5/QtCore/qsharedpointer_impl.h \
+		/usr/include/qt5/QtCore/qhash.h \
+		/usr/include/qt5/QtGui/qfont.h \
+		/usr/include/qt5/QtGui/qfontmetrics.h \
+		/usr/include/qt5/QtGui/qfontinfo.h \
+		/usr/include/qt5/QtWidgets/qsizepolicy.h \
+		/usr/include/qt5/QtGui/qcursor.h \
+		/usr/include/qt5/QtGui/qkeysequence.h \
+		/usr/include/qt5/QtGui/qevent.h \
+		/usr/include/qt5/QtCore/qvariant.h \
+		/usr/include/qt5/QtCore/qmap.h \
+		/usr/include/qt5/QtCore/qdebug.h \
+		/usr/include/qt5/QtCore/qtextstream.h \
+		/usr/include/qt5/QtCore/qlocale.h \
+		/usr/include/qt5/QtCore/qset.h \
+		/usr/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/include/qt5/QtCore/qurl.h \
+		/usr/include/qt5/QtCore/qurlquery.h \
+		/usr/include/qt5/QtCore/qfile.h \
+		/usr/include/qt5/QtCore/qfiledevice.h \
+		/usr/include/qt5/QtGui/qvector2d.h \
+		/usr/include/qt5/QtGui/qtouchdevice.h \
+		/usr/include/qt5/QtWidgets/QSpinBox \
+		/usr/include/qt5/QtWidgets/qspinbox.h \
+		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
+		/usr/include/qt5/QtGui/qvalidator.h \
+		/usr/include/qt5/QtCore/qregularexpression.h \
+		/usr/include/qt5/QtWidgets/QSlider \
+		/usr/include/qt5/QtWidgets/qslider.h \
+		/usr/include/qt5/QtWidgets/qabstractslider.h \
+		../qt_gl_gst/senslocwindow.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qt_gl_gst/senslocwindow.h -o moc_senslocwindow.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_controlsform.h
+compiler_uic_make_all: ui_controlsform.h ui_senslocwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_controlsform.h
+	-$(DEL_FILE) ui_controlsform.h ui_senslocwindow.h
 ui_controlsform.h: ../qt_gl_gst/controlsform.ui
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../qt_gl_gst/controlsform.ui -o ui_controlsform.h
+
+ui_senslocwindow.h: ../qt_gl_gst/senslocwindow.ui
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../qt_gl_gst/senslocwindow.ui -o ui_senslocwindow.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -2185,7 +2323,16 @@ glwidget.o: ../qt_gl_gst/glwidget.cpp /usr/include/qt5/QtWidgets/QMainWindow \
 		/usr/include/qt5/QtWidgets/qlabel.h \
 		../qt_gl_gst/shaderlists.h \
 		../qt_gl_gst/applogger.h \
-		/usr/include/qt5/QtCore/QMap
+		/usr/include/qt5/QtCore/QMap \
+		../qt_gl_gst/senslocwindow.h \
+		/usr/include/qt5/QtWidgets/QSpinBox \
+		/usr/include/qt5/QtWidgets/qspinbox.h \
+		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
+		/usr/include/qt5/QtGui/qvalidator.h \
+		/usr/include/qt5/QtCore/qregularexpression.h \
+		/usr/include/qt5/QtWidgets/QSlider \
+		/usr/include/qt5/QtWidgets/qslider.h \
+		/usr/include/qt5/QtWidgets/qabstractslider.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o glwidget.o ../qt_gl_gst/glwidget.cpp
 
 model.o: ../qt_gl_gst/model.cpp ../qt_gl_gst/model.h \
@@ -3715,7 +3862,16 @@ mainwindow.o: ../qt_gl_gst/mainwindow.cpp ../qt_gl_gst/mainwindow.h \
 		/usr/include/qt5/QtWidgets/qgridlayout.h \
 		/usr/include/qt5/QtWidgets/QLabel \
 		/usr/include/qt5/QtWidgets/qlabel.h \
-		../qt_gl_gst/controlsform.h
+		../qt_gl_gst/controlsform.h \
+		../qt_gl_gst/senslocwindow.h \
+		/usr/include/qt5/QtWidgets/QSpinBox \
+		/usr/include/qt5/QtWidgets/qspinbox.h \
+		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
+		/usr/include/qt5/QtGui/qvalidator.h \
+		/usr/include/qt5/QtCore/qregularexpression.h \
+		/usr/include/qt5/QtWidgets/QSlider \
+		/usr/include/qt5/QtWidgets/qslider.h \
+		/usr/include/qt5/QtWidgets/qabstractslider.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../qt_gl_gst/mainwindow.cpp
 
 yuvdebugwindow.o: ../qt_gl_gst/yuvdebugwindow.cpp ../qt_gl_gst/yuvdebugwindow.h \
@@ -3950,6 +4106,17 @@ controlsform.o: ../qt_gl_gst/controlsform.cpp ../qt_gl_gst/controlsform.h \
 		/usr/include/qt5/QtCore/qfiledevice.h \
 		/usr/include/qt5/QtGui/qvector2d.h \
 		/usr/include/qt5/QtGui/qtouchdevice.h \
+		../qt_gl_gst/senslocwindow.h \
+		/usr/include/qt5/QtWidgets/QDialog \
+		/usr/include/qt5/QtWidgets/qdialog.h \
+		/usr/include/qt5/QtWidgets/QSpinBox \
+		/usr/include/qt5/QtWidgets/qspinbox.h \
+		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
+		/usr/include/qt5/QtGui/qvalidator.h \
+		/usr/include/qt5/QtCore/qregularexpression.h \
+		/usr/include/qt5/QtWidgets/QSlider \
+		/usr/include/qt5/QtWidgets/qslider.h \
+		/usr/include/qt5/QtWidgets/qabstractslider.h \
 		ui_controlsform.h \
 		../qt_gl_gst/glwidget.h \
 		/usr/include/qt5/QtWidgets/QApplication \
@@ -3991,7 +4158,6 @@ controlsform.o: ../qt_gl_gst/controlsform.cpp ../qt_gl_gst/controlsform.h \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \
 		/usr/include/qt5/QtCore/qfileinfo.h \
-		/usr/include/qt5/QtWidgets/qdialog.h \
 		/usr/include/qt5/QtCore/QSignalMapper \
 		/usr/include/qt5/QtCore/qsignalmapper.h \
 		/usr/include/qt5/QtCore/QTime \
@@ -4213,7 +4379,6 @@ controlsform.o: ../qt_gl_gst/controlsform.cpp ../qt_gl_gst/controlsform.h \
 		/usr/local/include/assimp/LogStream.h \
 		/usr/local/include/assimp/NullLogger.h \
 		../qt_gl_gst/yuvdebugwindow.h \
-		/usr/include/qt5/QtWidgets/QDialog \
 		/usr/include/qt5/QtWidgets/QScrollArea \
 		/usr/include/qt5/QtWidgets/qscrollarea.h \
 		/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
@@ -4304,6 +4469,400 @@ applogger.o: ../qt_gl_gst/applogger.cpp ../qt_gl_gst/applogger.h \
 		/usr/include/qt5/QtCore/qcontiguouscache.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o applogger.o ../qt_gl_gst/applogger.cpp
 
+senslocwindow.o: ../qt_gl_gst/senslocwindow.cpp ../qt_gl_gst/senslocwindow.h \
+		/usr/include/qt5/QtWidgets/QDialog \
+		/usr/include/qt5/QtWidgets/qdialog.h \
+		/usr/include/qt5/QtWidgets/qwidget.h \
+		/usr/include/qt5/QtGui/qwindowdefs.h \
+		/usr/include/qt5/QtCore/qglobal.h \
+		/usr/include/qt5/QtCore/qconfig.h \
+		/usr/include/qt5/QtCore/qfeatures.h \
+		/usr/include/qt5/QtCore/qsystemdetection.h \
+		/usr/include/qt5/QtCore/qprocessordetection.h \
+		/usr/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/include/qt5/QtCore/qglobalstatic.h \
+		/usr/include/qt5/QtCore/qatomic.h \
+		/usr/include/qt5/QtCore/qbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/include/qt5/QtCore/qgenericatomic.h \
+		/usr/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/include/qt5/QtCore/qatomic_integrity.h \
+		/usr/include/qt5/QtCore/qoldbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_vxworks.h \
+		/usr/include/qt5/QtCore/qatomic_power.h \
+		/usr/include/qt5/QtCore/qatomic_alpha.h \
+		/usr/include/qt5/QtCore/qatomic_armv7.h \
+		/usr/include/qt5/QtCore/qatomic_armv6.h \
+		/usr/include/qt5/QtCore/qatomic_armv5.h \
+		/usr/include/qt5/QtCore/qatomic_bfin.h \
+		/usr/include/qt5/QtCore/qatomic_ia64.h \
+		/usr/include/qt5/QtCore/qatomic_mips.h \
+		/usr/include/qt5/QtCore/qatomic_s390.h \
+		/usr/include/qt5/QtCore/qatomic_sh4a.h \
+		/usr/include/qt5/QtCore/qatomic_sparc.h \
+		/usr/include/qt5/QtCore/qatomic_gcc.h \
+		/usr/include/qt5/QtCore/qatomic_x86.h \
+		/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/include/qt5/QtCore/qatomic_unix.h \
+		/usr/include/qt5/QtCore/qmutex.h \
+		/usr/include/qt5/QtCore/qlogging.h \
+		/usr/include/qt5/QtCore/qflags.h \
+		/usr/include/qt5/QtCore/qtypeinfo.h \
+		/usr/include/qt5/QtCore/qtypetraits.h \
+		/usr/include/qt5/QtCore/qsysinfo.h \
+		/usr/include/qt5/QtCore/qobjectdefs.h \
+		/usr/include/qt5/QtCore/qnamespace.h \
+		/usr/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/include/qt5/QtGui/qwindowdefs_win.h \
+		/usr/include/qt5/QtCore/qobject.h \
+		/usr/include/qt5/QtCore/qstring.h \
+		/usr/include/qt5/QtCore/qchar.h \
+		/usr/include/qt5/QtCore/qbytearray.h \
+		/usr/include/qt5/QtCore/qrefcount.h \
+		/usr/include/qt5/QtCore/qarraydata.h \
+		/usr/include/qt5/QtCore/qstringbuilder.h \
+		/usr/include/qt5/QtCore/qlist.h \
+		/usr/include/qt5/QtCore/qalgorithms.h \
+		/usr/include/qt5/QtCore/qiterator.h \
+		/usr/include/qt5/QtCore/qcoreevent.h \
+		/usr/include/qt5/QtCore/qscopedpointer.h \
+		/usr/include/qt5/QtCore/qmetatype.h \
+		/usr/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/include/qt5/QtCore/qisenum.h \
+		/usr/include/qt5/QtCore/qobject_impl.h \
+		/usr/include/qt5/QtCore/qmargins.h \
+		/usr/include/qt5/QtCore/qrect.h \
+		/usr/include/qt5/QtCore/qsize.h \
+		/usr/include/qt5/QtCore/qpoint.h \
+		/usr/include/qt5/QtGui/qpaintdevice.h \
+		/usr/include/qt5/QtGui/qpalette.h \
+		/usr/include/qt5/QtGui/qcolor.h \
+		/usr/include/qt5/QtGui/qrgb.h \
+		/usr/include/qt5/QtCore/qstringlist.h \
+		/usr/include/qt5/QtCore/qdatastream.h \
+		/usr/include/qt5/QtCore/qiodevice.h \
+		/usr/include/qt5/QtCore/qpair.h \
+		/usr/include/qt5/QtCore/qregexp.h \
+		/usr/include/qt5/QtCore/qstringmatcher.h \
+		/usr/include/qt5/QtGui/qbrush.h \
+		/usr/include/qt5/QtCore/qvector.h \
+		/usr/include/qt5/QtGui/qmatrix.h \
+		/usr/include/qt5/QtGui/qpolygon.h \
+		/usr/include/qt5/QtGui/qregion.h \
+		/usr/include/qt5/QtCore/qline.h \
+		/usr/include/qt5/QtGui/qtransform.h \
+		/usr/include/qt5/QtGui/qpainterpath.h \
+		/usr/include/qt5/QtGui/qimage.h \
+		/usr/include/qt5/QtGui/qpixmap.h \
+		/usr/include/qt5/QtCore/qsharedpointer.h \
+		/usr/include/qt5/QtCore/qshareddata.h \
+		/usr/include/qt5/QtCore/qsharedpointer_impl.h \
+		/usr/include/qt5/QtCore/qhash.h \
+		/usr/include/qt5/QtGui/qfont.h \
+		/usr/include/qt5/QtGui/qfontmetrics.h \
+		/usr/include/qt5/QtGui/qfontinfo.h \
+		/usr/include/qt5/QtWidgets/qsizepolicy.h \
+		/usr/include/qt5/QtGui/qcursor.h \
+		/usr/include/qt5/QtGui/qkeysequence.h \
+		/usr/include/qt5/QtGui/qevent.h \
+		/usr/include/qt5/QtCore/qvariant.h \
+		/usr/include/qt5/QtCore/qmap.h \
+		/usr/include/qt5/QtCore/qdebug.h \
+		/usr/include/qt5/QtCore/qtextstream.h \
+		/usr/include/qt5/QtCore/qlocale.h \
+		/usr/include/qt5/QtCore/qset.h \
+		/usr/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/include/qt5/QtCore/qurl.h \
+		/usr/include/qt5/QtCore/qurlquery.h \
+		/usr/include/qt5/QtCore/qfile.h \
+		/usr/include/qt5/QtCore/qfiledevice.h \
+		/usr/include/qt5/QtGui/qvector2d.h \
+		/usr/include/qt5/QtGui/qtouchdevice.h \
+		/usr/include/qt5/QtWidgets/QSpinBox \
+		/usr/include/qt5/QtWidgets/qspinbox.h \
+		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
+		/usr/include/qt5/QtGui/qvalidator.h \
+		/usr/include/qt5/QtCore/qregularexpression.h \
+		/usr/include/qt5/QtWidgets/QSlider \
+		/usr/include/qt5/QtWidgets/qslider.h \
+		/usr/include/qt5/QtWidgets/qabstractslider.h \
+		ui_senslocwindow.h \
+		../qt_gl_gst/glwidget.h \
+		/usr/include/qt5/QtWidgets/QApplication \
+		/usr/include/qt5/QtWidgets/qapplication.h \
+		/usr/include/qt5/QtCore/qcoreapplication.h \
+		/usr/include/qt5/QtCore/qeventloop.h \
+		/usr/include/qt5/QtWidgets/qdesktopwidget.h \
+		/usr/include/qt5/QtGui/qguiapplication.h \
+		/usr/include/qt5/QtGui/qinputmethod.h \
+		/usr/include/qt5/QtOpenGL/QGLWidget \
+		/usr/include/qt5/QtOpenGL/qgl.h \
+		/usr/include/qt5/QtGui/qopengl.h \
+		/usr/include/qt5/QtCore/qt_windows.h \
+		/usr/include/qt5/QtGui/qopengles2ext.h \
+		/usr/include/qt5/QtGui/qopenglext.h \
+		/usr/include/qt5/QtGui/qpaintengine.h \
+		/usr/include/qt5/QtGui/qpainter.h \
+		/usr/include/qt5/QtGui/qtextoption.h \
+		/usr/include/qt5/QtGui/qpen.h \
+		/usr/include/qt5/QtOpenGL/qglcolormap.h \
+		/usr/include/qt5/QtOpenGL/qtopenglglobal.h \
+		/usr/include/qt5/QtGui/QSurfaceFormat \
+		/usr/include/qt5/QtGui/qsurfaceformat.h \
+		/usr/include/qt5/QtOpenGL/QGLShaderProgram \
+		/usr/include/qt5/QtOpenGL/qglshaderprogram.h \
+		/usr/include/qt5/QtGui/qvector3d.h \
+		/usr/include/qt5/QtGui/qvector4d.h \
+		/usr/include/qt5/QtGui/qmatrix4x4.h \
+		/usr/include/qt5/QtGui/qquaternion.h \
+		/usr/include/qt5/QtGui/qgenericmatrix.h \
+		/usr/include/qt5/QtGui/QMouseEvent \
+		/usr/include/qt5/QtCore/QTextStream \
+		/usr/include/qt5/QtCore/QFile \
+		/usr/include/qt5/QtCore/QTimer \
+		/usr/include/qt5/QtCore/qtimer.h \
+		/usr/include/qt5/QtCore/qbasictimer.h \
+		/usr/include/qt5/QtCore/QStringList \
+		/usr/include/qt5/QtWidgets/QFileDialog \
+		/usr/include/qt5/QtWidgets/qfiledialog.h \
+		/usr/include/qt5/QtCore/qdir.h \
+		/usr/include/qt5/QtCore/qfileinfo.h \
+		/usr/include/qt5/QtCore/QSignalMapper \
+		/usr/include/qt5/QtCore/qsignalmapper.h \
+		/usr/include/qt5/QtCore/QTime \
+		/usr/include/qt5/QtCore/qdatetime.h \
+		/usr/include/qt5/QtGui/QPaintEvent \
+		../qt_gl_gst/pipeline.h \
+		/usr/include/qt5/QtWidgets/QWidget \
+		../qt_gl_gst/asyncwaitingqueue.h \
+		/usr/include/qt5/QtCore/QMutex \
+		/usr/include/qt5/QtCore/QWaitCondition \
+		/usr/include/qt5/QtCore/qwaitcondition.h \
+		/usr/include/qt5/QtCore/QList \
+		../qt_gl_gst/gstpipeline.h \
+		/usr/include/qt5/QtCore/QThread \
+		/usr/include/qt5/QtCore/qthread.h \
+		/usr/include/gstreamer-0.10/gst/gst.h \
+		/usr/include/glib-2.0/glib.h \
+		/usr/include/glib-2.0/glib/galloca.h \
+		/usr/include/glib-2.0/glib/gtypes.h \
+		/usr/lib/x86_64-linux-gnu/glib-2.0/include/glibconfig.h \
+		/usr/include/glib-2.0/glib/gmacros.h \
+		/usr/include/glib-2.0/glib/gversionmacros.h \
+		/usr/include/glib-2.0/glib/garray.h \
+		/usr/include/glib-2.0/glib/gasyncqueue.h \
+		/usr/include/glib-2.0/glib/gthread.h \
+		/usr/include/glib-2.0/glib/gatomic.h \
+		/usr/include/glib-2.0/glib/gerror.h \
+		/usr/include/glib-2.0/glib/gquark.h \
+		/usr/include/glib-2.0/glib/gbacktrace.h \
+		/usr/include/glib-2.0/glib/gbase64.h \
+		/usr/include/glib-2.0/glib/gbitlock.h \
+		/usr/include/glib-2.0/glib/gbookmarkfile.h \
+		/usr/include/glib-2.0/glib/gbytes.h \
+		/usr/include/glib-2.0/glib/gcharset.h \
+		/usr/include/glib-2.0/glib/gchecksum.h \
+		/usr/include/glib-2.0/glib/gconvert.h \
+		/usr/include/glib-2.0/glib/gdataset.h \
+		/usr/include/glib-2.0/glib/gdate.h \
+		/usr/include/glib-2.0/glib/gdatetime.h \
+		/usr/include/glib-2.0/glib/gtimezone.h \
+		/usr/include/glib-2.0/glib/gdir.h \
+		/usr/include/glib-2.0/glib/genviron.h \
+		/usr/include/glib-2.0/glib/gfileutils.h \
+		/usr/include/glib-2.0/glib/ggettext.h \
+		/usr/include/glib-2.0/glib/ghash.h \
+		/usr/include/glib-2.0/glib/glist.h \
+		/usr/include/glib-2.0/glib/gmem.h \
+		/usr/include/glib-2.0/glib/gnode.h \
+		/usr/include/glib-2.0/glib/ghmac.h \
+		/usr/include/glib-2.0/glib/ghook.h \
+		/usr/include/glib-2.0/glib/ghostutils.h \
+		/usr/include/glib-2.0/glib/giochannel.h \
+		/usr/include/glib-2.0/glib/gmain.h \
+		/usr/include/glib-2.0/glib/gpoll.h \
+		/usr/include/glib-2.0/glib/gslist.h \
+		/usr/include/glib-2.0/glib/gstring.h \
+		/usr/include/glib-2.0/glib/gunicode.h \
+		/usr/include/glib-2.0/glib/gutils.h \
+		/usr/include/glib-2.0/glib/gkeyfile.h \
+		/usr/include/glib-2.0/glib/gmappedfile.h \
+		/usr/include/glib-2.0/glib/gmarkup.h \
+		/usr/include/glib-2.0/glib/gmessages.h \
+		/usr/include/glib-2.0/glib/goption.h \
+		/usr/include/glib-2.0/glib/gpattern.h \
+		/usr/include/glib-2.0/glib/gprimes.h \
+		/usr/include/glib-2.0/glib/gqsort.h \
+		/usr/include/glib-2.0/glib/gqueue.h \
+		/usr/include/glib-2.0/glib/grand.h \
+		/usr/include/glib-2.0/glib/gregex.h \
+		/usr/include/glib-2.0/glib/gscanner.h \
+		/usr/include/glib-2.0/glib/gsequence.h \
+		/usr/include/glib-2.0/glib/gshell.h \
+		/usr/include/glib-2.0/glib/gslice.h \
+		/usr/include/glib-2.0/glib/gspawn.h \
+		/usr/include/glib-2.0/glib/gstrfuncs.h \
+		/usr/include/glib-2.0/glib/gstringchunk.h \
+		/usr/include/glib-2.0/glib/gtestutils.h \
+		/usr/include/glib-2.0/glib/gthreadpool.h \
+		/usr/include/glib-2.0/glib/gtimer.h \
+		/usr/include/glib-2.0/glib/gtrashstack.h \
+		/usr/include/glib-2.0/glib/gtree.h \
+		/usr/include/glib-2.0/glib/gurifuncs.h \
+		/usr/include/glib-2.0/glib/gvarianttype.h \
+		/usr/include/glib-2.0/glib/gvariant.h \
+		/usr/include/glib-2.0/glib/gversion.h \
+		/usr/include/glib-2.0/glib/gwin32.h \
+		/usr/include/glib-2.0/glib/deprecated/gallocator.h \
+		/usr/include/glib-2.0/glib/deprecated/gcache.h \
+		/usr/include/glib-2.0/glib/deprecated/gcompletion.h \
+		/usr/include/glib-2.0/glib/deprecated/gmain.h \
+		/usr/include/glib-2.0/glib/deprecated/grel.h \
+		/usr/include/glib-2.0/glib/deprecated/gthread.h \
+		/usr/include/gstreamer-0.10/gst/glib-compat.h \
+		/usr/include/gstreamer-0.10/gst/gstenumtypes.h \
+		/usr/include/glib-2.0/glib-object.h \
+		/usr/include/glib-2.0/gobject/gbinding.h \
+		/usr/include/glib-2.0/gobject/gobject.h \
+		/usr/include/glib-2.0/gobject/gtype.h \
+		/usr/include/glib-2.0/gobject/gvalue.h \
+		/usr/include/glib-2.0/gobject/gparam.h \
+		/usr/include/glib-2.0/gobject/gclosure.h \
+		/usr/include/glib-2.0/gobject/gsignal.h \
+		/usr/include/glib-2.0/gobject/gmarshal.h \
+		/usr/include/glib-2.0/gobject/gboxed.h \
+		/usr/include/glib-2.0/gobject/glib-types.h \
+		/usr/include/glib-2.0/gobject/genums.h \
+		/usr/include/glib-2.0/gobject/gparamspecs.h \
+		/usr/include/glib-2.0/gobject/gsourceclosure.h \
+		/usr/include/glib-2.0/gobject/gtypemodule.h \
+		/usr/include/glib-2.0/gobject/gtypeplugin.h \
+		/usr/include/glib-2.0/gobject/gvaluearray.h \
+		/usr/include/glib-2.0/gobject/gvaluetypes.h \
+		/usr/include/gstreamer-0.10/gst/gstversion.h \
+		/usr/include/gstreamer-0.10/gst/gstatomicqueue.h \
+		/usr/include/gstreamer-0.10/gst/gstbin.h \
+		/usr/include/gstreamer-0.10/gst/gstelement.h \
+		/usr/include/gstreamer-0.10/gst/gstconfig.h \
+		/usr/include/libxml2/libxml/parser.h \
+		/usr/include/libxml2/libxml/xmlversion.h \
+		/usr/include/libxml2/libxml/xmlexports.h \
+		/usr/include/libxml2/libxml/tree.h \
+		/usr/include/libxml2/libxml/xmlstring.h \
+		/usr/include/libxml2/libxml/xmlregexp.h \
+		/usr/include/libxml2/libxml/dict.h \
+		/usr/include/libxml2/libxml/xmlmemory.h \
+		/usr/include/libxml2/libxml/threads.h \
+		/usr/include/libxml2/libxml/globals.h \
+		/usr/include/libxml2/libxml/xmlerror.h \
+		/usr/include/libxml2/libxml/SAX.h \
+		/usr/include/libxml2/libxml/xlink.h \
+		/usr/include/libxml2/libxml/SAX2.h \
+		/usr/include/libxml2/libxml/hash.h \
+		/usr/include/libxml2/libxml/valid.h \
+		/usr/include/libxml2/libxml/list.h \
+		/usr/include/libxml2/libxml/xmlautomata.h \
+		/usr/include/libxml2/libxml/entities.h \
+		/usr/include/libxml2/libxml/encoding.h \
+		/usr/include/libxml2/libxml/xmlIO.h \
+		/usr/include/gstreamer-0.10/gst/gstobject.h \
+		/usr/include/gstreamer-0.10/gst/gstpad.h \
+		/usr/include/gstreamer-0.10/gst/gstbuffer.h \
+		/usr/include/gstreamer-0.10/gst/gstminiobject.h \
+		/usr/include/gstreamer-0.10/gst/gstclock.h \
+		/usr/include/gstreamer-0.10/gst/gstcaps.h \
+		/usr/include/gstreamer-0.10/gst/gststructure.h \
+		/usr/include/gstreamer-0.10/gst/gstdatetime.h \
+		/usr/include/gstreamer-0.10/gst/gstbufferlist.h \
+		/usr/include/gstreamer-0.10/gst/gstevent.h \
+		/usr/include/gstreamer-0.10/gst/gstformat.h \
+		/usr/include/gstreamer-0.10/gst/gstiterator.h \
+		/usr/include/gstreamer-0.10/gst/gsttaglist.h \
+		/usr/include/gstreamer-0.10/gst/gstquery.h \
+		/usr/include/gstreamer-0.10/gst/gsttask.h \
+		/usr/include/gstreamer-0.10/gst/gsttaskpool.h \
+		/usr/include/gstreamer-0.10/gst/gstpadtemplate.h \
+		/usr/include/gstreamer-0.10/gst/gstbus.h \
+		/usr/include/gstreamer-0.10/gst/gstmessage.h \
+		/usr/include/gstreamer-0.10/gst/gstelementfactory.h \
+		/usr/include/gstreamer-0.10/gst/gstplugin.h \
+		/usr/include/glib-2.0/gmodule.h \
+		/usr/include/gstreamer-0.10/gst/gstmacros.h \
+		/usr/include/gstreamer-0.10/gst/gstpluginfeature.h \
+		/usr/include/gstreamer-0.10/gst/gstindex.h \
+		/usr/include/gstreamer-0.10/gst/gstindexfactory.h \
+		/usr/include/gstreamer-0.10/gst/gstchildproxy.h \
+		/usr/include/gstreamer-0.10/gst/gstdebugutils.h \
+		/usr/include/gstreamer-0.10/gst/gsterror.h \
+		/usr/include/gstreamer-0.10/gst/gstghostpad.h \
+		/usr/include/gstreamer-0.10/gst/gstinfo.h \
+		/usr/include/gstreamer-0.10/gst/gstinterface.h \
+		/usr/include/gstreamer-0.10/gst/gstmarshal.h \
+		/usr/include/gstreamer-0.10/gst/gstparamspecs.h \
+		/usr/include/gstreamer-0.10/gst/gstvalue.h \
+		/usr/include/gstreamer-0.10/gst/gstpipeline.h \
+		/usr/include/gstreamer-0.10/gst/gstpoll.h \
+		/usr/include/gstreamer-0.10/gst/gstpreset.h \
+		/usr/include/gstreamer-0.10/gst/gstregistry.h \
+		/usr/include/gstreamer-0.10/gst/gstsegment.h \
+		/usr/include/gstreamer-0.10/gst/gstsystemclock.h \
+		/usr/include/gstreamer-0.10/gst/gsttagsetter.h \
+		/usr/include/gstreamer-0.10/gst/gsttrace.h \
+		/usr/include/gstreamer-0.10/gst/gsttypefind.h \
+		/usr/include/gstreamer-0.10/gst/gsttypefindfactory.h \
+		/usr/include/gstreamer-0.10/gst/gsturi.h \
+		/usr/include/gstreamer-0.10/gst/gstutils.h \
+		/usr/include/gstreamer-0.10/gst/gstparse.h \
+		/usr/include/gstreamer-0.10/gst/gstxml.h \
+		/usr/include/gstreamer-0.10/gst/gstcompat.h \
+		../qt_gl_gst/tigstpipeline.h \
+		../qt_gl_gst/model.h \
+		/usr/include/qt5/QtGui/QVector2D \
+		/usr/include/qt5/QtGui/QVector3D \
+		/usr/local/include/assimp/assimp.h \
+		/usr/local/include/assimp/aiTypes.h \
+		/usr/local/include/assimp/aiDefines.h \
+		/usr/local/include/assimp/aiVector3D.h \
+		/usr/local/include/assimp/Compiler/pushpack1.h \
+		/usr/local/include/assimp/Compiler/poppack1.h \
+		/usr/local/include/assimp/aiVector2D.h \
+		/usr/local/include/assimp/aiColor4D.h \
+		/usr/local/include/assimp/aiMatrix3x3.h \
+		/usr/local/include/assimp/aiMatrix4x4.h \
+		/usr/local/include/assimp/aiQuaternion.h \
+		/usr/local/include/assimp/aiVector3D.inl \
+		/usr/local/include/assimp/aiColor4D.inl \
+		/usr/local/include/assimp/aiMatrix3x3.inl \
+		/usr/local/include/assimp/aiMatrix4x4.inl \
+		/usr/local/include/assimp/aiAssert.h \
+		/usr/local/include/assimp/aiPostProcess.h \
+		/usr/local/include/assimp/aiScene.h \
+		/usr/local/include/assimp/aiTexture.h \
+		/usr/local/include/assimp/aiMesh.h \
+		/usr/local/include/assimp/aiLight.h \
+		/usr/local/include/assimp/aiCamera.h \
+		/usr/local/include/assimp/aiMaterial.h \
+		/usr/local/include/assimp/aiMaterial.inl \
+		/usr/local/include/assimp/aiAnim.h \
+		/usr/local/include/assimp/DefaultLogger.h \
+		/usr/local/include/assimp/Logger.h \
+		/usr/local/include/assimp/LogStream.h \
+		/usr/local/include/assimp/NullLogger.h \
+		../qt_gl_gst/yuvdebugwindow.h \
+		/usr/include/qt5/QtWidgets/QScrollArea \
+		/usr/include/qt5/QtWidgets/qscrollarea.h \
+		/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
+		/usr/include/qt5/QtWidgets/qframe.h \
+		/usr/include/qt5/QtWidgets/QVBoxLayout \
+		/usr/include/qt5/QtWidgets/qboxlayout.h \
+		/usr/include/qt5/QtWidgets/qlayout.h \
+		/usr/include/qt5/QtWidgets/qlayoutitem.h \
+		/usr/include/qt5/QtWidgets/qgridlayout.h \
+		/usr/include/qt5/QtWidgets/QLabel \
+		/usr/include/qt5/QtWidgets/qlabel.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o senslocwindow.o ../qt_gl_gst/senslocwindow.cpp
+
 moc_glwidget.o: moc_glwidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_glwidget.o moc_glwidget.cpp
 
@@ -4321,6 +4880,9 @@ moc_yuvdebugwindow.o: moc_yuvdebugwindow.cpp
 
 moc_controlsform.o: moc_controlsform.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_controlsform.o moc_controlsform.cpp
+
+moc_senslocwindow.o: moc_senslocwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_senslocwindow.o moc_senslocwindow.cpp
 
 ####### Install
 

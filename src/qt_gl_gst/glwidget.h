@@ -19,7 +19,7 @@
 #include <iostream>
 
 #include "pipeline.h"
-
+#include "senslocwindow.h"
 #include "model.h"
 
 #ifdef ENABLE_YUV_WINDOW
@@ -128,6 +128,9 @@ class GLWidget : public QGLWidget
     Q_OBJECT
 public:
     explicit GLWidget(int argc, char *argv[], QWidget *parent = 0);
+    void setvidXRotation(int x){vid_xRot = x;}
+    void setvidYRotation(int y){vid_yRot = y;}
+    void setvidZRotation(int z){vid_zRot = z;}
     ~GLWidget();
 
     virtual void initVideo();
@@ -138,6 +141,11 @@ public:
     void setXRotation(int angle);
     void setYRotation(int angle);
     void setZRotation(int angle);
+    void setsenslocpointer(sensLocWindow *pointer){p_senslocwindow = pointer;}
+
+
+
+
 
 Q_SIGNALS:
     void closeRequested();
@@ -190,6 +198,11 @@ private:
     int setupShader(QGLShaderProgram *prog, QString baseFileName, bool vertNeeded, bool fragNeeded);
     int setupShader(QGLShaderProgram *prog, GLShaderModule shaderList[], int listLen);
     int getCallingGstVecIx(int vidIx);
+
+    sensLocWindow *p_senslocwindow;
+    int vid_xRot;
+    int vid_yRot;
+    int vid_zRot;
 
     bool m_closing;
     QString m_dataFilesDir;

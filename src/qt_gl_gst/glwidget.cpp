@@ -2,6 +2,7 @@
 #include "glwidget.h"
 #include "shaderlists.h"
 #include "applogger.h"
+//#include "senslocwindow.h"
 
 #ifdef GLU_NEEDED
  #include "GL/glu.h"
@@ -30,6 +31,8 @@ GLWidget::GLWidget(int argc, char *argv[], QWidget *parent) :
     m_clearColorIndex = 0;
     m_stackVidQuads = false;
     m_currentModelEffectIndex = ModelEffectFirst;
+
+    sensLocWindow *rotations;
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
@@ -299,7 +302,7 @@ void GLWidget::paintEvent(QPaintEvent *event)
     }
 
     // Draw videos around the object
-    for(int vidIx = 0; vidIx < this->m_vidTextures.size(); vidIx++)
+    for(int vidIx = 0; vidIx < 1; vidIx++)
     {
         if(this->m_vidTextures[vidIx].texInfoValid)
         {
@@ -338,8 +341,16 @@ void GLWidget::paintEvent(QPaintEvent *event)
             }
             else
             {
-                vidQuadMatrix.rotate((270/this->m_vidTextures.size())*vidIx, 0.0, 1.0, 0.0);
+
+                int xRot = p_senslocwindow->getx0Rot();
+                int yRot = p_senslocwindow->gety0Rot();
+                int zRot = p_senslocwindow->getz0Rot();
+                vidQuadMatrix.rotate(xRot, 1.0, 0.0, 0.0);
+                vidQuadMatrix.rotate(yRot, 0.0, 1.0, 0.0);
+                vidQuadMatrix.rotate(zRot, 0.0, 0.0, 1.0);
+
                 vidQuadMatrix.translate(0.0, 0.0, 2.0);
+
             }
 
 
@@ -370,6 +381,167 @@ void GLWidget::paintEvent(QPaintEvent *event)
             vidShader->disableAttributeArray("a_texCoord");
         }
     }
+
+    for(int vidIx = 1; vidIx < 2; vidIx++)
+    {
+        if(this->m_vidTextures[vidIx].texInfoValid)
+        {
+            // Render a quad with the video on it:
+            glActiveTexture(GL_RECT_VID_TEXTURE0);
+            glBindTexture(GL_RECT_VID_TEXTURE_2D, this->m_vidTextures[vidIx].texId);
+            printOpenGLError(__FILE__, __LINE__);
+
+            if((this->m_vidTextures[vidIx].effect == VidShaderAlphaMask) && this->m_alphaTextureLoaded)
+            {
+                glEnable (GL_BLEND);
+                glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                glActiveTexture(GL_RECT_TEXTURE1);
+                glBindTexture(GL_RECT_TEXTURE_2D, this->m_alphaTextureId);
+            }
+
+            this->m_vidTextures[vidIx].shader->bind();
+            setVidShaderVars(vidIx, false);
+            printOpenGLError(__FILE__, __LINE__);
+
+            if(this->m_vidTextures[vidIx].effect == VidShaderColourHilightSwap)
+            {
+                this->m_vidTextures[vidIx].shader->setUniformValue("u_componentSwapR", m_colourComponentSwapR);
+                this->m_vidTextures[vidIx].shader->setUniformValue("u_componentSwapG", m_colourComponentSwapG);
+                this->m_vidTextures[vidIx].shader->setUniformValue("u_componentSwapB", m_colourComponentSwapB);
+            }
+
+            QGLShaderProgram *vidShader = this->m_vidTextures[vidIx].shader;
+
+            QMatrix4x4 vidQuadMatrix = this->m_modelViewMatrix;
+
+            if(m_stackVidQuads)
+            {
+                vidQuadMatrix.translate(0.0, 0.0, 2.0);
+                vidQuadMatrix.translate(0.0, 0.0, 0.2*vidIx);
+            }
+            else
+            {
+
+                int xRot = p_senslocwindow->getx1Rot();
+                int yRot = p_senslocwindow->gety1Rot();
+                int zRot = p_senslocwindow->getz1Rot();
+                vidQuadMatrix.rotate(xRot, 1.0, 0.0, 0.0);
+                vidQuadMatrix.rotate(yRot, 0.0, 1.0, 0.0);
+                vidQuadMatrix.rotate(zRot, 0.0, 0.0, 1.0);
+
+                vidQuadMatrix.translate(0.0, 0.0, 2.0);
+
+            }
+
+
+            vidShader->setUniformValue("u_mvp_matrix", m_projectionMatrix * vidQuadMatrix);
+            vidShader->setUniformValue("u_mv_matrix", vidQuadMatrix);
+
+            // Need to set these arrays up here as shader instances are shared between
+            // all the videos:
+            vidShader->enableAttributeArray("a_texCoord");
+            vidShader->setAttributeArray("a_texCoord", this->m_vidTextures[vidIx].triStripTexCoords);
+
+            if(this->m_vidTextures[vidIx].effect == VidShaderAlphaMask)
+            {
+                vidShader->enableAttributeArray("a_alphaTexCoord");
+                vidShader->setAttributeArray("a_alphaTexCoord", this->m_vidTextures[vidIx].triStripAlphaTexCoords);
+            }
+
+            vidShader->enableAttributeArray("a_vertex");
+            vidShader->setAttributeArray("a_vertex", this->m_vidTextures[vidIx].triStripVertices);
+
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+            vidShader->disableAttributeArray("a_vertex");
+            if(this->m_vidTextures[vidIx].effect == VidShaderAlphaMask)
+            {
+                vidShader->disableAttributeArray("a_alphaTexCoord");
+            }
+            vidShader->disableAttributeArray("a_texCoord");
+        }
+    }
+
+    for(int vidIx = 2; vidIx < 3; vidIx++)
+    {
+        if(this->m_vidTextures[vidIx].texInfoValid)
+        {
+            // Render a quad with the video on it:
+            glActiveTexture(GL_RECT_VID_TEXTURE0);
+            glBindTexture(GL_RECT_VID_TEXTURE_2D, this->m_vidTextures[vidIx].texId);
+            printOpenGLError(__FILE__, __LINE__);
+
+            if((this->m_vidTextures[vidIx].effect == VidShaderAlphaMask) && this->m_alphaTextureLoaded)
+            {
+                glEnable (GL_BLEND);
+                glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                glActiveTexture(GL_RECT_TEXTURE1);
+                glBindTexture(GL_RECT_TEXTURE_2D, this->m_alphaTextureId);
+            }
+
+            this->m_vidTextures[vidIx].shader->bind();
+            setVidShaderVars(vidIx, false);
+            printOpenGLError(__FILE__, __LINE__);
+
+            if(this->m_vidTextures[vidIx].effect == VidShaderColourHilightSwap)
+            {
+                this->m_vidTextures[vidIx].shader->setUniformValue("u_componentSwapR", m_colourComponentSwapR);
+                this->m_vidTextures[vidIx].shader->setUniformValue("u_componentSwapG", m_colourComponentSwapG);
+                this->m_vidTextures[vidIx].shader->setUniformValue("u_componentSwapB", m_colourComponentSwapB);
+            }
+
+            QGLShaderProgram *vidShader = this->m_vidTextures[vidIx].shader;
+
+            QMatrix4x4 vidQuadMatrix = this->m_modelViewMatrix;
+
+            if(m_stackVidQuads)
+            {
+                vidQuadMatrix.translate(0.0, 0.0, 2.0);
+                vidQuadMatrix.translate(0.0, 0.0, 0.2*vidIx);
+            }
+            else
+            {
+
+                int xRot = p_senslocwindow->getx2Rot();
+                int yRot = p_senslocwindow->gety2Rot();
+                int zRot = p_senslocwindow->getz2Rot();
+                vidQuadMatrix.rotate(xRot, 1.0, 0.0, 0.0);
+                vidQuadMatrix.rotate(yRot, 0.0, 1.0, 0.0);
+                vidQuadMatrix.rotate(zRot, 0.0, 0.0, 1.0);
+
+                vidQuadMatrix.translate(0.0, 0.0, 2.0);
+
+            }
+
+
+            vidShader->setUniformValue("u_mvp_matrix", m_projectionMatrix * vidQuadMatrix);
+            vidShader->setUniformValue("u_mv_matrix", vidQuadMatrix);
+
+            // Need to set these arrays up here as shader instances are shared between
+            // all the videos:
+            vidShader->enableAttributeArray("a_texCoord");
+            vidShader->setAttributeArray("a_texCoord", this->m_vidTextures[vidIx].triStripTexCoords);
+
+            if(this->m_vidTextures[vidIx].effect == VidShaderAlphaMask)
+            {
+                vidShader->enableAttributeArray("a_alphaTexCoord");
+                vidShader->setAttributeArray("a_alphaTexCoord", this->m_vidTextures[vidIx].triStripAlphaTexCoords);
+            }
+
+            vidShader->enableAttributeArray("a_vertex");
+            vidShader->setAttributeArray("a_vertex", this->m_vidTextures[vidIx].triStripVertices);
+
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+            vidShader->disableAttributeArray("a_vertex");
+            if(this->m_vidTextures[vidIx].effect == VidShaderAlphaMask)
+            {
+                vidShader->disableAttributeArray("a_alphaTexCoord");
+            }
+            vidShader->disableAttributeArray("a_texCoord");
+        }
+    }
+
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);

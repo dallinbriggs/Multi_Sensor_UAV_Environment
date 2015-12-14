@@ -42,3 +42,10 @@ void ControlsForm::closeEvent(QCloseEvent* event)
     if(_parent)
         _parent->close();
 }
+
+void ControlsForm::on_sensLocPushButton_clicked()
+{
+//    senslocpointer = new sensLocWindow(this);
+    senslocpointer->show();
+
+}

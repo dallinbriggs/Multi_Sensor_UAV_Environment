@@ -1,0 +1,796 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>sensLocWindow</class>
+ <widget class="QDialog" name="sensLocWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>504</width>
+    <height>581</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>520</y>
+     <width>341</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>10</y>
+     <width>281</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Set the Location of the Sensors</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_12">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>200</y>
+     <width>66</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Video 1:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_13">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>360</y>
+     <width>66</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Video 2:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>50</y>
+     <width>66</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Video 0:</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>70</y>
+     <width>421</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Rotation about x-axis</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSlider" name="vid0xRot">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="vid0xRotSpin">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>110</y>
+     <width>421</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Rotation about y-axis</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSlider" name="vid0yRot">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="vid0yRotSpin">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>150</y>
+     <width>421</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item>
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Rotation about z-axis</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSlider" name="vid0zRot">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="vid0zRotSpin">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>220</y>
+     <width>421</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <item>
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>Rotation about x-axis</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSlider" name="vid1xRot">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="vid1xRotSpin">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>260</y>
+     <width>421</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <item>
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Rotation about y-axis</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSlider" name="vid1yRot">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="vid1yRotSpin">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>300</y>
+     <width>421</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_6">
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>Rotation about z-axis</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSlider" name="vid1zRot">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="vid1zRotSpin">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>380</y>
+     <width>421</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_7">
+    <item>
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string>Rotation about x-axis</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSlider" name="vid2xRot">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="vid2xRotSpin">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>420</y>
+     <width>421</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_8">
+    <item>
+     <widget class="QLabel" name="label_10">
+      <property name="text">
+       <string>Rotation about y-axis</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSlider" name="vid2yRot">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="vid2yRotSpin">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>460</y>
+     <width>421</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_9">
+    <item>
+     <widget class="QLabel" name="label_11">
+      <property name="text">
+       <string>Rotation about z-axis</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSlider" name="vid2zRot">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="vid2zRotSpin">
+      <property name="maximum">
+       <number>359</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <zorder>buttonBox</zorder>
+  <zorder>label</zorder>
+  <zorder>vid0xRot</zorder>
+  <zorder>vid0yRot</zorder>
+  <zorder>vid0zRot</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_4</zorder>
+  <zorder>label_5</zorder>
+  <zorder>vid0xRotSpin</zorder>
+  <zorder>vid0yRotSpin</zorder>
+  <zorder>vid0zRotSpin</zorder>
+  <zorder>vid1xRotSpin</zorder>
+  <zorder>vid1yRotSpin</zorder>
+  <zorder>vid1zRotSpin</zorder>
+  <zorder>vid2xRotSpin</zorder>
+  <zorder>vid2yRotSpin</zorder>
+  <zorder>vid2zRotSpin</zorder>
+  <zorder>vid1xRot</zorder>
+  <zorder>vid1yRot</zorder>
+  <zorder>vid1zRot</zorder>
+  <zorder>vid2xRot</zorder>
+  <zorder>vid2yRot</zorder>
+  <zorder>vid2zRot</zorder>
+  <zorder>label_6</zorder>
+  <zorder>label_7</zorder>
+  <zorder>label_8</zorder>
+  <zorder>label_9</zorder>
+  <zorder>label_10</zorder>
+  <zorder>label_11</zorder>
+  <zorder>label_12</zorder>
+  <zorder>label_13</zorder>
+  <zorder>label_2</zorder>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>sensLocWindow</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>348</x>
+     <y>534</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>sensLocWindow</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>416</x>
+     <y>540</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid0xRot</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vid0xRotSpin</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>332</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>409</x>
+     <y>92</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid0xRotSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vid0xRot</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>418</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>363</x>
+     <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid0yRot</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>vid0yRotSpin</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>331</x>
+     <y>135</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>413</x>
+     <y>131</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid0yRotSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vid0yRot</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>420</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>127</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid0zRot</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>vid0zRotSpin</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>337</x>
+     <y>172</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>413</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid0zRotSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vid0zRot</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>414</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>371</x>
+     <y>166</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid1xRot</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>vid1xRotSpin</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>369</x>
+     <y>234</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>420</x>
+     <y>236</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid1xRotSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vid1xRot</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>430</x>
+     <y>227</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>391</x>
+     <y>231</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid1yRot</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>vid1yRotSpin</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>419</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid1yRotSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vid1yRot</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>437</x>
+     <y>270</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>394</x>
+     <y>272</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid1zRot</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>vid1zRotSpin</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>383</x>
+     <y>317</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>413</x>
+     <y>318</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid1zRotSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vid1zRot</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>432</x>
+     <y>314</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid2xRot</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>vid2xRotSpin</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>377</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>415</x>
+     <y>396</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid2xRotSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vid2xRot</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>430</x>
+     <y>389</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>394</x>
+     <y>389</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid2yRot</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>vid2yRotSpin</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>398</x>
+     <y>435</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>419</x>
+     <y>439</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid2yRotSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vid2yRot</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>433</x>
+     <y>440</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>395</x>
+     <y>439</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid2zRot</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>vid2zRotSpin</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>401</x>
+     <y>476</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>416</x>
+     <y>476</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vid2zRotSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vid2zRot</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>436</x>
+     <y>485</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>485</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

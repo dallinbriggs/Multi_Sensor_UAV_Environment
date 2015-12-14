@@ -33,22 +33,23 @@ public:
     QGridLayout *gridLayout;
     QPushButton *cycVidShadPushButton;
     QPushButton *cycModShadPushButton;
+    QPushButton *loadModelPushButton;
+    QPushButton *exitPushButton;
+    QCheckBox *rotateCheckBox;
+    QPushButton *showYUVPushButton;
+    QSpacerItem *horizontalSpacer;
     QCheckBox *stackVidsCheckBox;
     QPushButton *cycBackGndPushButton;
     QPushButton *loadVidPushButton;
-    QPushButton *resetPosPushButton;
     QPushButton *loadAlphaPushButton;
-    QCheckBox *rotateCheckBox;
-    QPushButton *loadModelPushButton;
-    QPushButton *exitPushButton;
-    QSpacerItem *horizontalSpacer;
-    QPushButton *showYUVPushButton;
+    QPushButton *resetPosPushButton;
+    QPushButton *sensLocPushButton;
 
     void setupUi(QWidget *ControlsForm)
     {
         if (ControlsForm->objectName().isEmpty())
             ControlsForm->setObjectName(QStringLiteral("ControlsForm"));
-        ControlsForm->resize(859, 412);
+        ControlsForm->resize(1076, 599);
         QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -56,8 +57,8 @@ public:
         ControlsForm->setSizePolicy(sizePolicy);
         verticalLayout = new QVBoxLayout(ControlsForm);
         verticalLayout->setSpacing(0);
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
         glWidgetLayout = new QHBoxLayout();
         glWidgetLayout->setObjectName(QStringLiteral("glWidgetLayout"));
         glWidgetLayout->setSizeConstraint(QLayout::SetMaximumSize);
@@ -80,37 +81,6 @@ public:
 
         gridLayout->addWidget(cycModShadPushButton, 0, 2, 1, 1);
 
-        stackVidsCheckBox = new QCheckBox(ControlsForm);
-        stackVidsCheckBox->setObjectName(QStringLiteral("stackVidsCheckBox"));
-
-        gridLayout->addWidget(stackVidsCheckBox, 1, 5, 1, 1);
-
-        cycBackGndPushButton = new QPushButton(ControlsForm);
-        cycBackGndPushButton->setObjectName(QStringLiteral("cycBackGndPushButton"));
-
-        gridLayout->addWidget(cycBackGndPushButton, 0, 6, 1, 1);
-
-        loadVidPushButton = new QPushButton(ControlsForm);
-        loadVidPushButton->setObjectName(QStringLiteral("loadVidPushButton"));
-
-        gridLayout->addWidget(loadVidPushButton, 1, 1, 1, 1);
-
-        resetPosPushButton = new QPushButton(ControlsForm);
-        resetPosPushButton->setObjectName(QStringLiteral("resetPosPushButton"));
-
-        gridLayout->addWidget(resetPosPushButton, 1, 6, 1, 1);
-
-        loadAlphaPushButton = new QPushButton(ControlsForm);
-        loadAlphaPushButton->setObjectName(QStringLiteral("loadAlphaPushButton"));
-
-        gridLayout->addWidget(loadAlphaPushButton, 1, 3, 1, 1);
-
-        rotateCheckBox = new QCheckBox(ControlsForm);
-        rotateCheckBox->setObjectName(QStringLiteral("rotateCheckBox"));
-        rotateCheckBox->setChecked(true);
-
-        gridLayout->addWidget(rotateCheckBox, 0, 5, 1, 1);
-
         loadModelPushButton = new QPushButton(ControlsForm);
         loadModelPushButton->setObjectName(QStringLiteral("loadModelPushButton"));
 
@@ -119,16 +89,52 @@ public:
         exitPushButton = new QPushButton(ControlsForm);
         exitPushButton->setObjectName(QStringLiteral("exitPushButton"));
 
-        gridLayout->addWidget(exitPushButton, 1, 7, 1, 1);
+        gridLayout->addWidget(exitPushButton, 1, 8, 1, 1);
 
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        rotateCheckBox = new QCheckBox(ControlsForm);
+        rotateCheckBox->setObjectName(QStringLiteral("rotateCheckBox"));
+        rotateCheckBox->setChecked(true);
 
-        gridLayout->addItem(horizontalSpacer, 0, 4, 1, 1);
+        gridLayout->addWidget(rotateCheckBox, 0, 6, 1, 1);
 
         showYUVPushButton = new QPushButton(ControlsForm);
         showYUVPushButton->setObjectName(QStringLiteral("showYUVPushButton"));
 
         gridLayout->addWidget(showYUVPushButton, 0, 3, 1, 1);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout->addItem(horizontalSpacer, 0, 5, 1, 1);
+
+        stackVidsCheckBox = new QCheckBox(ControlsForm);
+        stackVidsCheckBox->setObjectName(QStringLiteral("stackVidsCheckBox"));
+
+        gridLayout->addWidget(stackVidsCheckBox, 1, 6, 1, 1);
+
+        cycBackGndPushButton = new QPushButton(ControlsForm);
+        cycBackGndPushButton->setObjectName(QStringLiteral("cycBackGndPushButton"));
+
+        gridLayout->addWidget(cycBackGndPushButton, 0, 7, 1, 1);
+
+        loadVidPushButton = new QPushButton(ControlsForm);
+        loadVidPushButton->setObjectName(QStringLiteral("loadVidPushButton"));
+
+        gridLayout->addWidget(loadVidPushButton, 1, 1, 1, 1);
+
+        loadAlphaPushButton = new QPushButton(ControlsForm);
+        loadAlphaPushButton->setObjectName(QStringLiteral("loadAlphaPushButton"));
+
+        gridLayout->addWidget(loadAlphaPushButton, 1, 3, 1, 1);
+
+        resetPosPushButton = new QPushButton(ControlsForm);
+        resetPosPushButton->setObjectName(QStringLiteral("resetPosPushButton"));
+
+        gridLayout->addWidget(resetPosPushButton, 1, 7, 1, 1);
+
+        sensLocPushButton = new QPushButton(ControlsForm);
+        sensLocPushButton->setObjectName(QStringLiteral("sensLocPushButton"));
+
+        gridLayout->addWidget(sensLocPushButton, 0, 4, 1, 1);
 
 
         verticalLayout->addLayout(gridLayout);
@@ -144,15 +150,16 @@ public:
         ControlsForm->setWindowTitle(QApplication::translate("ControlsForm", "Form", 0));
         cycVidShadPushButton->setText(QApplication::translate("ControlsForm", "Cycle Vid Shader", 0));
         cycModShadPushButton->setText(QApplication::translate("ControlsForm", "Cycle Model Shader", 0));
+        loadModelPushButton->setText(QApplication::translate("ControlsForm", "Load Model", 0));
+        exitPushButton->setText(QApplication::translate("ControlsForm", "Exit", 0));
+        rotateCheckBox->setText(QApplication::translate("ControlsForm", "Rotate", 0));
+        showYUVPushButton->setText(QApplication::translate("ControlsForm", "Show YUV Window", 0));
         stackVidsCheckBox->setText(QApplication::translate("ControlsForm", "Stack Videos", 0));
         cycBackGndPushButton->setText(QApplication::translate("ControlsForm", "Cycle Background", 0));
         loadVidPushButton->setText(QApplication::translate("ControlsForm", "Load Video", 0));
-        resetPosPushButton->setText(QApplication::translate("ControlsForm", "Reset Position", 0));
         loadAlphaPushButton->setText(QApplication::translate("ControlsForm", "Load Alphamask", 0));
-        rotateCheckBox->setText(QApplication::translate("ControlsForm", "Rotate", 0));
-        loadModelPushButton->setText(QApplication::translate("ControlsForm", "Load Model", 0));
-        exitPushButton->setText(QApplication::translate("ControlsForm", "Exit", 0));
-        showYUVPushButton->setText(QApplication::translate("ControlsForm", "Show YUV Window", 0));
+        resetPosPushButton->setText(QApplication::translate("ControlsForm", "Reset Position", 0));
+        sensLocPushButton->setText(QApplication::translate("ControlsForm", "Set Sensor Location", 0));
     } // retranslateUi
 
 };

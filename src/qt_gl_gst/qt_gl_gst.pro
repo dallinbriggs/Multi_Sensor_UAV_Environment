@@ -23,7 +23,8 @@ SOURCES += \
     mainwindow.cpp \
     yuvdebugwindow.cpp \
     controlsform.cpp \
-    applogger.cpp
+    applogger.cpp \
+    senslocwindow.cpp
 
 HEADERS  += \
     glwidget.h \
@@ -35,10 +36,12 @@ HEADERS  += \
     mainwindow.h \
     yuvdebugwindow.h \
     controlsform.h \
-    applogger.h
+    applogger.h \
+    senslocwindow.h
 
 FORMS += \
-    controlsform.ui
+    controlsform.ui \
+    senslocwindow.ui
 
 # OpenGL support libraries:
 LIBS += -lGLU \
