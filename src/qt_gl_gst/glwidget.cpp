@@ -32,7 +32,6 @@ GLWidget::GLWidget(int argc, char *argv[], QWidget *parent) :
     m_stackVidQuads = false;
     m_currentModelEffectIndex = ModelEffectFirst;
 
-    sensLocWindow *rotations;
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
@@ -345,11 +344,11 @@ void GLWidget::paintEvent(QPaintEvent *event)
                 int xRot = p_senslocwindow->getx0Rot();
                 int yRot = p_senslocwindow->gety0Rot();
                 int zRot = p_senslocwindow->getz0Rot();
-                vidQuadMatrix.rotate(xRot, 1.0, 0.0, 0.0);
-                vidQuadMatrix.rotate(yRot, 0.0, 1.0, 0.0);
-                vidQuadMatrix.rotate(zRot, 0.0, 0.0, 1.0);
+                vidQuadMatrix.rotate(-xRot, 1.0, 0.0, 0.0);
+                vidQuadMatrix.rotate(-yRot, 0.0, 1.0, 0.0);
+                vidQuadMatrix.rotate(-zRot, 0.0, 0.0, 1.0);
 
-                vidQuadMatrix.translate(0.0, 0.0, 2.0);
+                vidQuadMatrix.translate(0.0, 0.0, -2.0);
 
             }
 
@@ -425,11 +424,11 @@ void GLWidget::paintEvent(QPaintEvent *event)
                 int xRot = p_senslocwindow->getx1Rot();
                 int yRot = p_senslocwindow->gety1Rot();
                 int zRot = p_senslocwindow->getz1Rot();
-                vidQuadMatrix.rotate(xRot, 1.0, 0.0, 0.0);
-                vidQuadMatrix.rotate(yRot, 0.0, 1.0, 0.0);
-                vidQuadMatrix.rotate(zRot, 0.0, 0.0, 1.0);
+                vidQuadMatrix.rotate(-xRot, 1.0, 0.0, 0.0);
+                vidQuadMatrix.rotate(-yRot, 0.0, 1.0, 0.0);
+                vidQuadMatrix.rotate(-zRot, 0.0, 0.0, 1.0);
 
-                vidQuadMatrix.translate(0.0, 0.0, 2.0);
+                vidQuadMatrix.translate(0.0, 0.0, -2.0);
 
             }
 
@@ -505,11 +504,11 @@ void GLWidget::paintEvent(QPaintEvent *event)
                 int xRot = p_senslocwindow->getx2Rot();
                 int yRot = p_senslocwindow->gety2Rot();
                 int zRot = p_senslocwindow->getz2Rot();
-                vidQuadMatrix.rotate(xRot, 1.0, 0.0, 0.0);
-                vidQuadMatrix.rotate(yRot, 0.0, 1.0, 0.0);
-                vidQuadMatrix.rotate(zRot, 0.0, 0.0, 1.0);
+                vidQuadMatrix.rotate(-xRot, 1.0, 0.0, 0.0);
+                vidQuadMatrix.rotate(-yRot, 0.0, 1.0, 0.0);
+                vidQuadMatrix.rotate(-zRot, 0.0, 0.0, 1.0);
 
-                vidQuadMatrix.translate(0.0, 0.0, 2.0);
+                vidQuadMatrix.translate(0.0, 0.0, -2.0);
 
             }
 
